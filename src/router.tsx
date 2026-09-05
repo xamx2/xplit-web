@@ -13,6 +13,19 @@ export default createBrowserRouter([
       {
         path: 'login',
         lazy: () => import('@/routes/Login')
+      },
+      {
+        path: 'groups',
+        children: [
+          {
+            path: 'new',
+            lazy: () => import('@/routes/NewGroup')
+          },
+          {
+            path: ':groupId',
+            lazy: () => import('@/routes/Group')
+          }
+        ]
       }
     ]
   }

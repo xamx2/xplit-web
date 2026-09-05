@@ -14,10 +14,16 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n  query CurrentUser {\n    currentUser {\n      id\n    }\n  }\n": typeof types.CurrentUserDocument,
+    "\n  fragment CoreGroupFields on Group {\n    id\n    name\n  }\n": typeof types.CoreGroupFieldsFragmentDoc,
+    "\n  mutation CreateGroup($input: GroupInput!) {\n    createGroup(input: $input) {\n      ...CoreGroupFields\n    }\n  }\n": typeof types.CreateGroupDocument,
+    "\n  query Group($id: ID!) {\n    currentUser {\n      id\n      group(id: $id) {\n        ...CoreGroupFields\n      }\n    }\n  }\n": typeof types.GroupDocument,
+    "\n  query Groups {\n    currentUser {\n      id\n      groups {\n        ...CoreGroupFields\n      }\n    }\n  }\n": typeof types.GroupsDocument,
 };
 const documents: Documents = {
-    "\n  query CurrentUser {\n    currentUser {\n      id\n    }\n  }\n": types.CurrentUserDocument,
+    "\n  fragment CoreGroupFields on Group {\n    id\n    name\n  }\n": types.CoreGroupFieldsFragmentDoc,
+    "\n  mutation CreateGroup($input: GroupInput!) {\n    createGroup(input: $input) {\n      ...CoreGroupFields\n    }\n  }\n": types.CreateGroupDocument,
+    "\n  query Group($id: ID!) {\n    currentUser {\n      id\n      group(id: $id) {\n        ...CoreGroupFields\n      }\n    }\n  }\n": types.GroupDocument,
+    "\n  query Groups {\n    currentUser {\n      id\n      groups {\n        ...CoreGroupFields\n      }\n    }\n  }\n": types.GroupsDocument,
 };
 
 /**
@@ -37,7 +43,19 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query CurrentUser {\n    currentUser {\n      id\n    }\n  }\n"): (typeof documents)["\n  query CurrentUser {\n    currentUser {\n      id\n    }\n  }\n"];
+export function graphql(source: "\n  fragment CoreGroupFields on Group {\n    id\n    name\n  }\n"): (typeof documents)["\n  fragment CoreGroupFields on Group {\n    id\n    name\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CreateGroup($input: GroupInput!) {\n    createGroup(input: $input) {\n      ...CoreGroupFields\n    }\n  }\n"): (typeof documents)["\n  mutation CreateGroup($input: GroupInput!) {\n    createGroup(input: $input) {\n      ...CoreGroupFields\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query Group($id: ID!) {\n    currentUser {\n      id\n      group(id: $id) {\n        ...CoreGroupFields\n      }\n    }\n  }\n"): (typeof documents)["\n  query Group($id: ID!) {\n    currentUser {\n      id\n      group(id: $id) {\n        ...CoreGroupFields\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query Groups {\n    currentUser {\n      id\n      groups {\n        ...CoreGroupFields\n      }\n    }\n  }\n"): (typeof documents)["\n  query Groups {\n    currentUser {\n      id\n      groups {\n        ...CoreGroupFields\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

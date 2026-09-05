@@ -8,7 +8,10 @@ const config: CodegenConfig = {
   documents: ['src/graphql/docs/**/*.ts'],
   generates: {
     './src/graphql/gql/': {
-      preset: 'client'
+      preset: 'client',
+      presetConfig: {
+        fragmentMasking: { unmaskFunctionName: 'unmaskFragment' }
+      }
     }
   }
 }
