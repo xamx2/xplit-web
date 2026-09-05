@@ -10,10 +10,12 @@
     "lint": "rslint",
     "preview": "rsbuild preview",
     "test": "rstest",
-    "test:watch": "rstest --watch"
+    "test:watch": "rstest --watch",
+    "codegen": "graphql-codegen"
   },
   "dependencies": {
     "@apollo/client": "^4.2.12",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "firebase": "^12.18.0",
     "graphql": "^17.0.2",
     "react": "^19.2.8",
@@ -22,6 +24,7 @@
     "rxjs": "^7.8.2"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^7.4.0",
     "@rsbuild/core": "^2.2.3",
     "@rsbuild/plugin-react": "^2.1.0",
     "@rsbuild/plugin-tailwindcss": "^2.0.3",
