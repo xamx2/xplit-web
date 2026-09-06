@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import Root from "@/routes/Root";
 
 export default createBrowserRouter([
@@ -23,7 +23,17 @@ export default createBrowserRouter([
           },
           {
             path: ':groupId',
-            lazy: () => import('@/routes/Group')
+            lazy: () => import('@/routes/Group'),
+            children: [
+              {
+                index: true,
+                element: <Navigate to='transactions' replace />
+              },
+              {
+                path: 'transactions',
+                lazy: () => import('@/routes/Transactions')
+              }
+            ]
           }
         ]
       }

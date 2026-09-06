@@ -1,10 +1,10 @@
 import { graphql } from "@/graphql/gql";
 
 export const GROUP = graphql(`
-  query Group($id: ID!) {
+  query Group($groupId: ID!) {
     currentUser {
       id
-      group(id: $id) {
+      group(id: $groupId) {
         ...CoreGroupFields
       }
     }
