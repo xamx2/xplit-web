@@ -40,8 +40,17 @@ export default createBrowserRouter([
             ]
           },
           {
-            path: ':groupId/members/new',
-            lazy: () => import('@/routes/NewMember')
+            path: ':groupId',
+            children: [
+              {
+                path: 'members/new',
+                lazy: () => import('@/routes/NewMember')
+              },
+              {
+                path: 'transactions/new',
+                lazy: () => import('@/routes/NewTransaction')
+              }
+            ]
           }
         ]
       }

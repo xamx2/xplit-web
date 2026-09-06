@@ -5,7 +5,10 @@ import { useNavigate, useParams } from "react-router"
 export function Component() {
   const navigate = useNavigate()
   const { groupId } = useParams()
+  if (!groupId) throw 'groupId not found'
+
   const [createMember, { loading }] = useMutation(CREATE_MEMBER, {
+    variables: { groupId },
     onCompleted() {
       navigate(-1)
     }
@@ -18,7 +21,6 @@ export function Component() {
         const data = new FormData(e.currentTarget)
         createMember({
           variables: {
-            groupId: groupId!,
             input: { name: data.get('name')?.toString() }
           }
         })

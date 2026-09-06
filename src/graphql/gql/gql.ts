@@ -19,6 +19,7 @@ type Documents = {
     "\n  fragment CoreTransactionFields on Transaction {\n    id\n    amount\n    description\n  }\n": typeof types.CoreTransactionFieldsFragmentDoc,
     "\n  mutation CreateGroup($input: GroupInput!) {\n    createGroup(input: $input) {\n      ...CoreGroupFields\n    }\n  }\n": typeof types.CreateGroupDocument,
     "\n  mutation CreateGroupMember($groupId: ID!, $input: GroupMemberInput!) {\n    createGroupMember(groupId: $groupId, input: $input) {\n      ...CoreMemberFields\n    }\n  }\n": typeof types.CreateGroupMemberDocument,
+    "\n  mutation CreateTransaction($groupId: ID!, $input: TransactionInput!) {\n    createTransaction(groupId: $groupId, input: $input) {\n      ...CoreTransactionFields\n    }\n  }\n": typeof types.CreateTransactionDocument,
     "\n  query Group($groupId: ID!) {\n    currentUser {\n      id\n      group(id: $groupId) {\n        ...CoreGroupFields\n      }\n    }\n  }\n": typeof types.GroupDocument,
     "\n  query Groups {\n    currentUser {\n      id\n      groups {\n        ...CoreGroupFields\n      }\n    }\n  }\n": typeof types.GroupsDocument,
     "\n  query Members($groupId: ID!) {\n    currentUser {\n      group(id: $groupId) {\n        id\n        members {\n          ...CoreMemberFields\n        }\n      }\n    }\n  }\n": typeof types.MembersDocument,
@@ -30,6 +31,7 @@ const documents: Documents = {
     "\n  fragment CoreTransactionFields on Transaction {\n    id\n    amount\n    description\n  }\n": types.CoreTransactionFieldsFragmentDoc,
     "\n  mutation CreateGroup($input: GroupInput!) {\n    createGroup(input: $input) {\n      ...CoreGroupFields\n    }\n  }\n": types.CreateGroupDocument,
     "\n  mutation CreateGroupMember($groupId: ID!, $input: GroupMemberInput!) {\n    createGroupMember(groupId: $groupId, input: $input) {\n      ...CoreMemberFields\n    }\n  }\n": types.CreateGroupMemberDocument,
+    "\n  mutation CreateTransaction($groupId: ID!, $input: TransactionInput!) {\n    createTransaction(groupId: $groupId, input: $input) {\n      ...CoreTransactionFields\n    }\n  }\n": types.CreateTransactionDocument,
     "\n  query Group($groupId: ID!) {\n    currentUser {\n      id\n      group(id: $groupId) {\n        ...CoreGroupFields\n      }\n    }\n  }\n": types.GroupDocument,
     "\n  query Groups {\n    currentUser {\n      id\n      groups {\n        ...CoreGroupFields\n      }\n    }\n  }\n": types.GroupsDocument,
     "\n  query Members($groupId: ID!) {\n    currentUser {\n      group(id: $groupId) {\n        id\n        members {\n          ...CoreMemberFields\n        }\n      }\n    }\n  }\n": types.MembersDocument,
@@ -70,6 +72,10 @@ export function graphql(source: "\n  mutation CreateGroup($input: GroupInput!) {
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation CreateGroupMember($groupId: ID!, $input: GroupMemberInput!) {\n    createGroupMember(groupId: $groupId, input: $input) {\n      ...CoreMemberFields\n    }\n  }\n"): (typeof documents)["\n  mutation CreateGroupMember($groupId: ID!, $input: GroupMemberInput!) {\n    createGroupMember(groupId: $groupId, input: $input) {\n      ...CoreMemberFields\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CreateTransaction($groupId: ID!, $input: TransactionInput!) {\n    createTransaction(groupId: $groupId, input: $input) {\n      ...CoreTransactionFields\n    }\n  }\n"): (typeof documents)["\n  mutation CreateTransaction($groupId: ID!, $input: TransactionInput!) {\n    createTransaction(groupId: $groupId, input: $input) {\n      ...CoreTransactionFields\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
