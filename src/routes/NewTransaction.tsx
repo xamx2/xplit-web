@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router"
 import TransactionForm, { TRANSACTION_FORM_ID } from "./components/TransactionForm"
 import { useMutation } from "@apollo/client/react"
 import { CREATE_TRANSACTION } from "@/graphql/docs/mutations/create-transaction"
+import Page from "@/components/Page"
 
 export function Component() {
   const { groupId } = useParams()
@@ -16,11 +17,13 @@ export function Component() {
   })
 
   return (
-    <div>
-      <TransactionForm groupId={groupId} onSubmit={input => createTransaction({ variables: { input } })} />
-      <button type='submit' form={TRANSACTION_FORM_ID} disabled={loading}>
-        Create
-      </button>
-    </div>
+    <Page title="Add transaction">
+      <div>
+        <TransactionForm groupId={groupId} onSubmit={input => createTransaction({ variables: { input } })} />
+        <button type='submit' form={TRANSACTION_FORM_ID} disabled={loading}>
+          Create
+        </button>
+      </div>
+    </Page>
   )
 }

@@ -1,4 +1,5 @@
 import Input from "@/components/Input"
+import Page from "@/components/Page"
 import { CREATE_MEMBER } from "@/graphql/docs/mutations/create-member"
 import { useMutation } from "@apollo/client/react"
 import { useNavigate, useParams } from "react-router"
@@ -16,19 +17,21 @@ export function Component() {
   })
 
   return (
-    <form
-      onSubmit={e => {
-        e.preventDefault()
-        const data = new FormData(e.currentTarget)
-        createMember({
-          variables: {
-            input: { name: data.get('name')?.toString() }
-          }
-        })
-      }}
-    >
-      <Input label='Name' name='name' required />
-      <button disabled={loading} type='submit'>Create</button>
-    </form>
+    <Page title="New member">
+      <form
+        onSubmit={e => {
+          e.preventDefault()
+          const data = new FormData(e.currentTarget)
+          createMember({
+            variables: {
+              input: { name: data.get('name')?.toString() }
+            }
+          })
+        }}
+      >
+        <Input label='Name' name='name' required />
+        <button disabled={loading} type='submit'>Create</button>
+      </form>
+    </Page>
   )
 }
