@@ -1,3 +1,4 @@
+import Input from "@/components/Input"
 import { CREATE_MEMBER } from "@/graphql/docs/mutations/create-member"
 import { useMutation } from "@apollo/client/react"
 import { useNavigate, useParams } from "react-router"
@@ -26,7 +27,7 @@ export function Component() {
         })
       }}
     >
-      <input name='name' required />
+      <Input label='Name' name='name' required />
       <button disabled={loading} type='submit'>Create</button>
     </form>
   )

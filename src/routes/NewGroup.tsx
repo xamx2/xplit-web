@@ -1,3 +1,4 @@
+import Input from "@/components/Input"
 import { CORE_GROUP_FIELDS } from "@/graphql/docs/fragments/group"
 import { CREATE_GROUP } from "@/graphql/docs/mutations/create-group"
 import { unmaskFragment } from "@/graphql/gql"
@@ -21,7 +22,7 @@ export function Component() {
         createGroup({ variables: { input: { name: data.get('name')?.toString() } } })
       }}
     >
-      <input name='name' required />
+      <Input label='Name' name='name' required />
       <button disabled={loading} type='submit'>Create</button>
     </form>
   )

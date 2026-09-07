@@ -1,3 +1,4 @@
+import Input from "@/components/Input"
 import { CORE_MEMBER_FIELDS } from "@/graphql/docs/fragments/member"
 import { MEMBERS } from "@/graphql/docs/queries/members"
 import { unmaskFragment } from "@/graphql/gql"
@@ -62,25 +63,16 @@ export default function TransactionForm({
         </label>
       </div>
 
-      <div>
-        <label>
-          Amount
-          <input
-            required
-            type='number'
-            name='amount'
-            value={amount || ''}
-            onChange={e => setAmount(e.currentTarget.value)}
-          />
-        </label>
-      </div>
+      <Input
+        required
+        type='number'
+        name='amount'
+        label='Amount'
+        value={amount || ''}
+        onChange={e => setAmount(e.currentTarget.value)}
+      />
 
-      <div>
-        <label>
-          Description
-          <textarea name='description' />
-        </label>
-      </div>
+      <Input name='description' label="Description" />
 
       <fieldset>
         <legend>For</legend>
