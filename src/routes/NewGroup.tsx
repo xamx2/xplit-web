@@ -16,7 +16,7 @@ export function Component() {
   })
 
   return (
-    <Page title="New group">
+    <Page title="New group" backable>
       <form
         onSubmit={e => {
           e.preventDefault()

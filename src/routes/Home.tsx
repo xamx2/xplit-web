@@ -1,4 +1,5 @@
 import Page from "@/components/Page"
+import { useUser } from "@/contexts/UserContext"
 import { CORE_GROUP_FIELDS } from "@/graphql/docs/fragments/group"
 import { GROUPS } from "@/graphql/docs/queries/groups"
 import { unmaskFragment } from "@/graphql/gql"
@@ -10,30 +11,34 @@ import { Link, useNavigate } from "react-router"
 export function Component() {
   const { data } = useSuspenseQuery(GROUPS, { fetchPolicy: 'cache-and-network' })
   const navigate = useNavigate()
+  const user = useUser()
 
   return (
     <Page
-      title="Xplit"
-      description="Group expenses sharing"
+      title={`Hi ${user?.displayName || 'there'}`}
+      description='Lets "xplit" your expenses with others'
+      actions={[
+        {
+          path: '/groups/new',
+          name: 'New group'
+        }
+      ]}
     >
-      <ul className="list-disc">
-        {data.currentUser.groups.map(group => {
-          const { id, name } = unmaskFragment(CORE_GROUP_FIELDS, group)
+      <div>
+        <ul className="list-disc">
+          {data.currentUser.groups.map(group => {
+            const { id, name } = unmaskFragment(CORE_GROUP_FIELDS, group)
 
-          return (
-            <li key={id}>
-              <Link to={`/groups/${id}`}>
-                {name}
-              </Link>
-            </li>
-          )
-        })}
-        <li>
-          <Link to="/groups/new">
-            New group
-          </Link>
-        </li>
-      </ul>
+            return (
+              <li key={id}>
+                <Link to={`/groups/${id}`}>
+                  {name}
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
 
       <button onClick={() => signOut(auth).then(() => navigate('/'))}>Logout</button>
     </Page>
