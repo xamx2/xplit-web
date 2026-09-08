@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router";
 import Root from "@/routes/Root";
+import Auth from "./routes/Auth";
 
 export default createBrowserRouter([
   {
@@ -8,52 +9,61 @@ export default createBrowserRouter([
     children: [
       {
         index: true,
-        lazy: () => import('@/routes/Home')
+        lazy: () => import('@/routes/Top')
       },
       {
         path: 'login',
         lazy: () => import('@/routes/Login')
       },
       {
-        path: 'groups',
+        Component: Auth,
         children: [
           {
-            path: 'new',
-            lazy: () => import('@/routes/NewGroup')
+            path: 'home',
+            lazy: () => import('@/routes/Home'),
           },
           {
-            path: ':groupId',
-            lazy: () => import('@/routes/Group'),
+            path: 'groups',
             children: [
               {
-                index: true,
-                element: <Navigate to='transactions' replace />
+                path: 'new',
+                lazy: () => import('@/routes/NewGroup')
               },
               {
-                path: 'transactions',
-                lazy: () => import('@/routes/Transactions')
+                path: ':groupId',
+                lazy: () => import('@/routes/Group'),
+                children: [
+                  {
+                    index: true,
+                    element: <Navigate to='transactions' replace />
+                  },
+                  {
+                    path: 'transactions',
+                    lazy: () => import('@/routes/Transactions')
+                  },
+                  {
+                    path: 'members',
+                    lazy: () => import('@/routes/Members'),
+                  }
+                ]
               },
               {
-                path: 'members',
-                lazy: () => import('@/routes/Members'),
-              }
-            ]
-          },
-          {
-            path: ':groupId',
-            children: [
-              {
-                path: 'members/new',
-                lazy: () => import('@/routes/NewMember')
-              },
-              {
-                path: 'transactions/new',
-                lazy: () => import('@/routes/NewTransaction')
+                path: ':groupId',
+                children: [
+                  {
+                    path: 'members/new',
+                    lazy: () => import('@/routes/NewMember')
+                  },
+                  {
+                    path: 'transactions/new',
+                    lazy: () => import('@/routes/NewTransaction')
+                  }
+                ]
               }
             ]
           }
         ]
-      }
+      },
     ]
   }
 ])
