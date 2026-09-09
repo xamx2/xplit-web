@@ -1,4 +1,6 @@
+import Form from "@/components/Form"
 import Input from "@/components/Input"
+import Select from "@/components/Select"
 import { CORE_MEMBER_FIELDS } from "@/graphql/docs/fragments/member"
 import { MEMBERS } from "@/graphql/docs/queries/members"
 import { unmaskFragment } from "@/graphql/gql"
@@ -10,10 +12,12 @@ export const TRANSACTION_FORM_ID = 'transaction-form'
 
 export default function TransactionForm({
   groupId,
-  onSubmit
+  onSubmit,
+  actions
 }: {
   groupId: Id,
   onSubmit(input: TransactionInput): void
+  actions: React.ReactNode
 }) {
   const { data: { currentUser: { group: { members } } } } = useSuspenseQuery(MEMBERS, {
     variables: { groupId }
@@ -35,7 +39,7 @@ export default function TransactionForm({
   }, [amount, splits])
 
   return (
-    <form
+    <Form
       id={TRANSACTION_FORM_ID}
       onSubmit={e => {
         e.preventDefault()
@@ -51,17 +55,12 @@ export default function TransactionForm({
         })
       }}
     >
-      <div>
-        <label>
-          From
-          <select name='memberId'>
-            {members.map(m => {
-              const { id, name } = unmaskFragment(CORE_MEMBER_FIELDS, m)
-              return <option key={id} value={id}>{name}</option>
-            })}
-          </select>
-        </label>
-      </div>
+      <Select name='memberId' label="From">
+        {members.map(m => {
+          const { id, name } = unmaskFragment(CORE_MEMBER_FIELDS, m)
+          return <option key={id} value={id}>{name}</option>
+        })}
+      </Select>
 
       <Input
         required
@@ -75,36 +74,42 @@ export default function TransactionForm({
       <Input name='description' label="Description" />
 
       <fieldset>
-        <legend>For</legend>
-        {members.map(m => {
-          const { id, name } = unmaskFragment(CORE_MEMBER_FIELDS, m)
-          const checked = id in splits
+        <legend className="text-gray-700">For</legend>
+        <div className="mt-2 grid gap-2">
+          {members.map(m => {
+            const { id, name } = unmaskFragment(CORE_MEMBER_FIELDS, m)
+            const checked = id in splits
 
-          return (
-            <div key={id}>
-              <label>
+            return (
+              <div key={id} className="flex justify-between">
+                <label className="inline-flex items-center">
+                  <input
+                    type='checkbox'
+                    checked={checked}
+                    className="form-checkbox"
+                    onChange={() => {
+                      const newSplits = { ...splits }
+                      if (checked) delete newSplits[id]
+                      else newSplits[id] = undefined
+                      setSplits(newSplits)
+                    }}
+                  />
+                  <span className="ml-2">
+                    {name}
+                  </span>
+                </label>
                 <input
-                  type='checkbox'
-                  checked={checked}
-                  onChange={() => {
-                    const newSplits = { ...splits }
-                    if (checked) delete newSplits[id]
-                    else newSplits[id] = undefined
-                    setSplits(newSplits)
-                  }}
+                  type='number'
+                  disabled={!checked}
+                  value={checked ? splits[id] ?? defaultSplitAmount : 0}
+                  onChange={e => setSplits({ ...splits, [id]: e.currentTarget.value })}
                 />
-                {name}
-              </label>
-              <input
-                type='number'
-                disabled={!checked}
-                value={checked ? splits[id] ?? defaultSplitAmount : 0}
-                onChange={e => setSplits({ ...splits, [id]: e.currentTarget.value })}
-              />
-            </div>
-          )
-        })}
+              </div>
+            )
+          })}
+        </div>
       </fieldset>
-    </form>
+      {actions}
+    </Form>
   )
 }

@@ -1,3 +1,5 @@
+import Button from "@/components/Button"
+import Form from "@/components/Form"
 import Input from "@/components/Input"
 import Page from "@/components/Page"
 import { CREATE_MEMBER } from "@/graphql/docs/mutations/create-member"
@@ -17,10 +19,9 @@ export function Component() {
   })
 
   return (
-    <Page title="New member">
-      <form
+    <Page title="New member" backable>
+      <Form
         onSubmit={e => {
-          e.preventDefault()
           const data = new FormData(e.currentTarget)
           createMember({
             variables: {
@@ -30,8 +31,16 @@ export function Component() {
         }}
       >
         <Input label='Name' name='name' required />
-        <button disabled={loading} type='submit'>Create</button>
-      </form>
+        <div>
+          <Button
+            type='submit'
+            variant="solid"
+            disabled={loading}
+          >
+            Create
+          </Button>
+        </div>
+      </Form>
     </Page>
   )
 }
