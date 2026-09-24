@@ -1,10 +1,12 @@
-const App = () => {
+import { BrowserRouter, RouterProvider } from "@dundunlabs/router";
+import Routes from "./routes";
+
+const router = new BrowserRouter()
+
+export default function App() {
   return (
-    <div className="content">
-      <h1>Rsbuild with React</h1>
-      <p>Start building amazing things with Rsbuild.</p>
-    </div>
+    <RouterProvider router={router}>
+      <Routes />
+    </RouterProvider>
   );
 };
-
-export default App;
