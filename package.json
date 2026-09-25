@@ -9,15 +9,21 @@
     "lint": "rslint",
     "preview": "rsbuild preview",
     "test": "rstest",
-    "test:watch": "rstest --watch"
+    "test:watch": "rstest --watch",
+    "codegen": "graphql-codegen"
   },
   "dependencies": {
+    "@apollo/client": "^4.3.1",
     "@dundunlabs/router": "^0.0.2",
     "firebase": "^12.19.0",
+    "graphql": "^17.0.2",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.0",
+    "rxjs": "^7.8.2"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^7.4.2",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@rsbuild/core": "^2.2.9",
     "@rsbuild/plugin-react": "^2.1.0",
     "@rslint/core": "^0.9.0",
