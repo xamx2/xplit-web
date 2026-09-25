@@ -5,6 +5,7 @@ import Home from "./Home";
 import Login from "./Login";
 import Private from "./Private";
 import Profile from "./Profile";
+import NewGroup from "./NewGroup";
 
 export default createRoutes([
   {
@@ -28,6 +29,15 @@ export default createRoutes([
           {
             path: 'profile',
             Component: Profile
+          },
+          {
+            path: 'groups',
+            children: [
+              {
+                path: 'new',
+                Component: NewGroup
+              }
+            ]
           }
         ]
       }

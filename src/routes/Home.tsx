@@ -1,5 +1,8 @@
 import { Link } from "@dundunlabs/router";
 import { useUser } from "../contexts/UserContext";
+import Groups from "./components/Groups";
+import { Suspense } from "react";
+import Loading from "../components/Loading";
 
 export default function Home() {
   const user = useUser()
@@ -16,8 +19,19 @@ export default function Home() {
           </Link>
           {' '}👋
         </h3>
-        <p>Lets split the bill with your friends.</p>
       </header>
+      <hr />
+      <main>
+        <div>
+          <p>Lets split the bill with your groups</p>
+          <Suspense fallback={<Loading />}>
+            <Groups />
+          </Suspense>
+          <Link to='/groups/new'>
+            Create new group
+          </Link>
+        </div>
+      </main>
     </>
   )
 }
