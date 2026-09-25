@@ -1,2 +1,5 @@
+allowBuilds:
+  "@firebase/util": true
+  protobufjs: true
 minimumReleaseAgeExclude:
-  - '@dundunlabs/router@0.0.0'
+  - '@dundunlabs/router@0.0.0 || 0.0.1 || 0.0.2'

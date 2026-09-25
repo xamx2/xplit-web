@@ -1,7 +1,6 @@
-import { BrowserRouter, RouterProvider } from "@dundunlabs/router";
+import { RouterProvider } from "@dundunlabs/router";
 import Routes from "./routes";
-
-const router = new BrowserRouter()
+import router from "./lib/router";
 
 export default function App() {
   return (

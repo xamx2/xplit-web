@@ -12,7 +12,8 @@
     "test:watch": "rstest --watch"
   },
   "dependencies": {
-    "@dundunlabs/router": "^0.0.0",
+    "@dundunlabs/router": "^0.0.2",
+    "firebase": "^12.19.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
