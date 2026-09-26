@@ -10,7 +10,12 @@ const config: CodegenConfig = {
     './src/gql/graphql/': {
       preset: 'client',
       presetConfig: {
-        fragmentMasking: { unmaskFunctionName: 'unmaskFragment' }
+        fragmentMasking: { unmaskFunctionName: 'unmaskFragment' },
+      },
+      config: {
+        scalars: {
+          Time: 'string',
+        }
       }
     }
   }

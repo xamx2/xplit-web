@@ -1,37 +1,75 @@
-import { Link } from "@dundunlabs/router";
+import { Link, useRouter } from "@dundunlabs/router";
 import { useUser } from "../contexts/UserContext";
-import Groups from "./components/Groups";
-import { Suspense } from "react";
-import Loading from "../components/Loading";
+import { useSuspenseQuery } from "@apollo/client/react";
+import { TRANSACTIONS } from "../gql/docs/queries/transactions";
+import TransactionList from "./components/TransactionList";
+import { GROUPS } from "../gql/docs/queries/groups";
+import { unmaskFragment } from "../gql/graphql";
+import { CORE_GROUP_FIELDS } from "../gql/docs/fragments/group";
 
 export default function Home() {
   const user = useUser()
-
   if (!user) throw 401
+
+  const router = useRouter()
+  const { data } = useSuspenseQuery(GROUPS)
 
   return (
     <>
       <header>
-        <h3>
+        <h1>
           Hi{' '}
           <Link to='/profile'>
             {user.displayName}
           </Link>
           {' '}👋
-        </h3>
+        </h1>
       </header>
-      <hr />
       <main>
         <div>
           <p>Lets split the bill with your groups</p>
-          <Suspense fallback={<Loading />}>
-            <Groups />
-          </Suspense>
-          <Link to='/groups/new'>
-            Create new group
-          </Link>
+          <ul>
+            {data.currentUser.groups.map(group => {
+              const { id, name } = unmaskFragment(CORE_GROUP_FIELDS, group)
+
+              return (
+                <li key={id}>
+                  <Link to={`/groups/${id}`}>
+                    {name}
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
+          <p>
+            <Link to='/groups/new'>
+              Create new group
+            </Link>
+          </p>
         </div>
-      </main>
+        {data.currentUser.groups.length > 0 && (
+          <>
+            <hr />
+            <div>
+              <h2>
+                Transactions
+                <button
+                  style={{ float: 'right' }}
+                  onClick={() => router.push('/transactions/new')}
+                >
+                  Add transaction
+                </button>
+              </h2>
+              <Transactions />
+            </div>
+          </>
+        )}
+      </main >
     </>
   )
+}
+
+function Transactions() {
+  const { data } = useSuspenseQuery(TRANSACTIONS)
+  return <TransactionList transactions={data.currentUser.transactions} />
 }
