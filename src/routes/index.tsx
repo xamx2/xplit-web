@@ -6,6 +6,8 @@ import Login from "./Login";
 import Private from "./Private";
 import Profile from "./Profile";
 import NewGroup from "./NewGroup";
+import Group from "./Group";
+import GroupTransactions from "./GroupTransactions";
 
 export default createRoutes([
   {
@@ -36,6 +38,19 @@ export default createRoutes([
               {
                 path: 'new',
                 Component: NewGroup
+              },
+              {
+                path: ':groupId',
+                Component: Group,
+                children: [
+                  {
+                    path: '/',
+                  },
+                  {
+                    path: 'transactions',
+                    Component: GroupTransactions
+                  }
+                ]
               }
             ]
           }
